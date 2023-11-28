@@ -12,7 +12,7 @@ public class QueryHandler {
         WishRepository = wishRepository;
     }
     public ArrayList<Wish> handle(GetWishesQuery query) {
-        ArrayList<Wish> result = WishRepository.GetWishesByCategory(query.UserID);
+        ArrayList<Wish> result = WishRepository.GetWishesByOwner(query.UserID);
         return result;
     }
 }
