@@ -1,14 +1,15 @@
-package org.example;
+package bot;
 
+import domain.Wish;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-public class EchoBot extends TelegramLongPollingBot {
+public class WishBot extends TelegramLongPollingBot {
 
     private String BotName;
-    public EchoBot(BotCredentials credentials){
+    public WishBot(BotCredentials credentials){
         super(credentials.BotKey);
         BotName= credentials.BotName;
     }

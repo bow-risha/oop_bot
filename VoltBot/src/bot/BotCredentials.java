@@ -1,4 +1,4 @@
-package org.example;
+package bot;
 
 public class BotCredentials {
     public String BotName;
