@@ -4,7 +4,6 @@ import aplication.CommandHandler;
 import aplication.QueryHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.UserRepository;
-import domain.Wish;
 import domain.WishRepository;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -22,7 +21,8 @@ public class Main {
         QueryHandler queryHandler = new QueryHandler(wishRepository);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        BotCredentials credentials = objectMapper.readValue(getResourceFile("settings.json"), BotCredentials.class);
+        BotCredentials credentials = objectMapper.readValue(getResourceFile("settings.json"),
+                BotCredentials.class);
         TelegramBotsApi api = new TelegramBotsApi(DefaultBotSession.class);
 
         WishBot wishBot=new WishBot(credentials, queryHandler, commandHandler,userRepository);

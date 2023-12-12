@@ -8,7 +8,7 @@ public class GetWishesQuery {
     public UUID UserID;
 
     public GetWishesQuery (User user){
-        UserID=user.ID;
+        UserID=user.getId();
     }
 
 }
