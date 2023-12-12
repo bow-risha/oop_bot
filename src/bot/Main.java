@@ -15,17 +15,18 @@ import java.net.URL;
 
 public class Main {
     public static void main(String[] args) throws IOException, TelegramApiException {
-        UserRepository userRepository= new UserRepository();
+        UserRepository userRepository = new UserRepository();
         WishRepository wishRepository = new WishRepository();
-        CommandHandler commandHandler= new CommandHandler(wishRepository);
+        CommandHandler commandHandler = new CommandHandler(wishRepository, userRepository);
         QueryHandler queryHandler = new QueryHandler(wishRepository);
+        KeyboardMapper keyboardMapper = new KeyboardMapper();
 
         ObjectMapper objectMapper = new ObjectMapper();
         BotCredentials credentials = objectMapper.readValue(getResourceFile("settings.json"),
                 BotCredentials.class);
         TelegramBotsApi api = new TelegramBotsApi(DefaultBotSession.class);
 
-        WishBot wishBot=new WishBot(credentials, queryHandler, commandHandler,userRepository);
+        WishBot wishBot = new WishBot(credentials, queryHandler, commandHandler, userRepository, keyboardMapper);
         api.registerBot(wishBot);
     }
 
