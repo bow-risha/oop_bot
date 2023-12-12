@@ -3,10 +3,10 @@ package aplication;
 import java.util.UUID;
 
 public class AddDescriptionCommand {
-    public String Description;
-    public UUID WishID;
+    public String description;
+    public UUID wishID;
     public AddDescriptionCommand(String description, UUID wishID){
-        Description = description;
-        WishID = wishID;
+        this.description = description;
+        this.wishID = wishID;
     }
 }

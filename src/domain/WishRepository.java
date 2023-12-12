@@ -8,17 +8,17 @@ public class WishRepository {
 
     HashMap<UUID, Wish> wishes = new HashMap<UUID, Wish>();
     public void AddWish(Wish wish){
-        wishes.put(wish.ID,wish);
+        wishes.put(wish.getId(),wish);
     }
 
-    public Wish GetWish(UUID wishId){
+    public Wish getWish(UUID wishId){
         return wishes.get(wishId);
     }
 
     public ArrayList<Wish> GetWishesByOwner(UUID ownerId){
         ArrayList<Wish> result = new ArrayList<Wish>();
         for (Wish wish: wishes.values()){
-            if (ownerId == wish.OwnerId){
+            if (ownerId == wish.getOwnerId()){
                 result.add(wish);
             }
         }
@@ -27,7 +27,7 @@ public class WishRepository {
     public ArrayList<Wish> GetWishesByCategory(UUID categoryId){
         ArrayList<Wish> result = new ArrayList<Wish>();
         for (Wish wish: wishes.values()){
-            if (categoryId == wish.CategoryId){
+            if (categoryId == wish.getCategoryId()){
                 result.add(wish);
             }
         }
