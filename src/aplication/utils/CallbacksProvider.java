@@ -9,9 +9,10 @@ import java.util.List;
 public class CallbacksProvider {
     public static List<Key> getCallbacks(Wish wish) {
         ArrayList<Key> callbackKeys = new ArrayList<>();
-        Key key = new Key(States.addWishDescription(wish.getId()), "Добавить описание");
-        callbackKeys.add(key);
+        Key addDescKey = new Key(States.addWishDescription(wish.getId()), "Добавить описание");
+        Key addLinkKey = new Key(States.addWishLink(wish.getId()), "Добавить ссылку");
+        callbackKeys.add(addDescKey);
+        callbackKeys.add(addLinkKey);
         return callbackKeys;
-
     }
 }

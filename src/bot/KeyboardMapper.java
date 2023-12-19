@@ -31,10 +31,12 @@ public class KeyboardMapper {
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
         KeyboardRow row = new KeyboardRow();
-        KeyboardButton getWIshButton=new KeyboardButton(Actions.GetWIshText);
-        KeyboardButton addWIshButton=new KeyboardButton(Actions.AddWIshText);
+        KeyboardButton getWIshButton=new KeyboardButton(Actions.GetWishText);
+        KeyboardButton addWIshButton=new KeyboardButton(Actions.AddWishText);
+        KeyboardButton shareWishButton=new KeyboardButton(Actions.ShareLinkText);
         row.add(getWIshButton);
         row.add(addWIshButton);
+        row.add(shareWishButton);
         keyboard.add(row);
         keyboardMarkup.setKeyboard(keyboard);
         return keyboardMarkup;

@@ -7,7 +7,9 @@ public class ViewProvider {
         var stb = new StringBuilder()
                 .append(wish.getName())
                 .append("\n")
-                .append(wish.getDescription() == null ? "" : wish.getDescription());
+                .append(wish.getDescription() == null ? "" : wish.getDescription())
+                .append("\n")
+                .append(wish.getLink() == null ? "" : wish.getLink());
         return stb.toString();
     }
 }

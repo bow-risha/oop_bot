@@ -17,7 +17,7 @@ public class QueryHandler {
         WishRepository = wishRepository;
     }
     public ArrayList<Response> handle(GetWishesQuery query) {
-        ArrayList<Wish> result = WishRepository.GetWishesByOwner(query.UserID);
+        ArrayList<Wish> result = WishRepository.getWishesByOwner(query.UserID);
 
         ArrayList<Response> responses=new ArrayList<>();
         for (Wish wish:result) {

@@ -45,7 +45,7 @@ public class WishBot extends TelegramLongPollingBot {
 
         if (update.hasCallbackQuery()) {
             User user = getOrAddUser(update.getCallbackQuery().getMessage().getChatId());
-            onCallbackReceived(update,user);
+            onCallbackReceived(update, user);
             return;
         }
 
@@ -53,20 +53,34 @@ public class WishBot extends TelegramLongPollingBot {
             User user = getOrAddUser(update.getMessage().getChatId());
             String text = update.getMessage().getText();
             if (user.hasState()) {
-                onStatefulUpdateReceived(update,user);
+                onStatefulUpdateReceived(update, user);
                 return;
             }
-            if (text.startsWith(Actions.AddWIshText)) {
+            if (text.startsWith(Actions.AddWishText)) {
                 SetStateCommand command = new SetStateCommand(user.getChatID(), States.AddWish);
                 commandHandler.handle(command);
                 SendMessage(update, user, new Response("Введите ваше желание"));
             }
-            if (text.startsWith(Actions.GetWIshText)) {
-                GetWishesQuery query = new GetWishesQuery(user);
+            if (text.startsWith(Actions.GetWishText)) {
+                GetWishesQuery query = new GetWishesQuery(user.getId());
                 ArrayList<Response> result = queryHandler.handle(query);
-                for (int i = 0; i < result.size(); i++) {
-                    SendMessage(update, user, result.get(i));
+                for (Response response : result) {
+                    SendMessage(update, user, response);
                 }
+            }
+
+            if (text.startsWith(Actions.GetWish)) {
+                String userId = text.substring(Actions.GetWish.length());
+                GetWishesQuery query = new GetWishesQuery(UUID.fromString(userId));
+                ArrayList<Response> result = queryHandler.handle(query);
+                for (Response response : result) {
+                    SendMessage(update, user, response);
+                }
+            }
+
+            if (text.startsWith(Actions.ShareLinkText)) {
+                String shareLink = Actions.GetWish + user.getId().toString();
+                SendMessage(update, user, new Response(shareLink));
             }
         }
     }
@@ -82,24 +96,33 @@ public class WishBot extends TelegramLongPollingBot {
         }
         if (user.getUserState().startsWith(States.AddWishDescription)) {
             String wishDescription = update.getMessage().getText();
-            String wishId=user.getUserState().substring(States.AddWishDescription.length());
+            String wishId = user.getUserState().substring(States.AddWishDescription.length());
             AddDescriptionCommand command = new AddDescriptionCommand(wishDescription, UUID.fromString(wishId));
             commandHandler.handle(command);
             SetStateCommand cleanState = new SetStateCommand(user.getChatID(), States.Empty);
             commandHandler.handle(cleanState);
             SendMessage(update, user, new Response("Описание добавлено!"));
         }
+        if (user.getUserState().startsWith(States.AddWishLink)) {
+            String wishLink = update.getMessage().getText();
+            String wishId = user.getUserState().substring(States.AddWishLink.length());
+            AddLinkCommand command = new AddLinkCommand(wishLink, UUID.fromString(wishId));
+            boolean addLinkResult=commandHandler.handle(command);
+            SetStateCommand cleanState = new SetStateCommand(user.getChatID(), States.Empty);
+            commandHandler.handle(cleanState);
+            SendMessage(update, user, new Response(addLinkResult?"Ссылка добавлена!":"Ссылка имеет неверный формат"));
+        }
     }
 
     public void onCallbackReceived(Update update, User user) {
-        String callbackData=update.getCallbackQuery().getData();
+        String callbackData = update.getCallbackQuery().getData();
         if (callbackData.startsWith(States.Setstate)) {
             SetStateCommand setStateCommand = new SetStateCommand(user.getChatID(), callbackData.substring(States.Setstate.length()));
             commandHandler.handle(setStateCommand);
             EditMessageText editMessage = new EditMessageText();
             editMessage.setChatId(user.getChatID());
             editMessage.setMessageId(toIntExact(update.getCallbackQuery().getMessage().getMessageId()));
-            editMessage.setText("Добавьте описание");
+            editMessage.setText("Желание редактируется");
             try {
                 execute(editMessage);
             } catch (TelegramApiException e) {
@@ -135,11 +158,11 @@ public class WishBot extends TelegramLongPollingBot {
 
     private User getOrAddUser(Long chatId) {
         User user = null;
-            user = userRepository.getUser(chatId);
-            if (user == null) {
-                user = new User(chatId);
-                userRepository.addUser(user);
-            }
+        user = userRepository.getUser(chatId);
+        if (user == null) {
+            user = new User(chatId);
+            userRepository.addUser(user);
+        }
         return user;
     }
 }
