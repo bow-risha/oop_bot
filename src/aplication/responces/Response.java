@@ -1,18 +1,22 @@
 package aplication.responces;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Response {
     private String text;
-    private ArrayList<Key> keys;
+    private List<Key> keys;
 
     public Response(String text) {
         this.text = text;
         keys = new ArrayList<>();
     }
 
-    public ArrayList<Key> getKeys() {
+    public List<Key> getKeys() {
         return keys;
+    }
+    public void setKeys(List<Key> keys) {
+        this.keys=keys;
     }
 
     public void addKey(Key key) {

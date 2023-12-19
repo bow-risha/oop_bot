@@ -2,10 +2,13 @@ package aplication;
 
 import aplication.responces.Key;
 import aplication.responces.Response;
+import aplication.utils.CallbacksProvider;
+import aplication.utils.ViewProvider;
 import domain.Wish;
 import domain.WishRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class QueryHandler {
@@ -18,9 +21,9 @@ public class QueryHandler {
 
         ArrayList<Response> responses=new ArrayList<>();
         for (Wish wish:result) {
-            Response response=new Response(wish.getName());
-            Key key =new Key("amazing 1","Добавить описание");
-            response.addKey(key);
+            Response response=new Response(ViewProvider.getWishView(wish));
+            List<Key> keys=CallbacksProvider.getCallbacks(wish);
+            response.setKeys(keys);
             responses.add(response);
         }
         return responses;

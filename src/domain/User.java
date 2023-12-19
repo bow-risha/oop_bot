@@ -27,4 +27,7 @@ public class User extends EntityBase {
     public void appendToUserState(String state) {
         this.userState = userState + state;
     }
+    public boolean hasState(){
+        return userState !=null;
+    }
 }

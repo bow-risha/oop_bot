@@ -7,7 +7,7 @@ import java.util.UUID;
 public class WishRepository {
 
     HashMap<UUID, Wish> wishes = new HashMap<UUID, Wish>();
-    public void AddWish(Wish wish){
+    public void addWish(Wish wish){
         wishes.put(wish.getId(),wish);
     }
 
