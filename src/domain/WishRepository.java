@@ -15,16 +15,16 @@ public class WishRepository {
         return wishes.get(wishId);
     }
 
-    public ArrayList<Wish> GetWishesByOwner(UUID ownerId){
+    public ArrayList<Wish> getWishesByOwner(UUID ownerId){
         ArrayList<Wish> result = new ArrayList<Wish>();
         for (Wish wish: wishes.values()){
-            if (ownerId == wish.getOwnerId()){
+            if (ownerId.equals(wish.getOwnerId())){
                 result.add(wish);
             }
         }
         return result;
     }
-    public ArrayList<Wish> GetWishesByCategory(UUID categoryId){
+    public ArrayList<Wish> getWishesByCategory(UUID categoryId){
         ArrayList<Wish> result = new ArrayList<Wish>();
         for (Wish wish: wishes.values()){
             if (categoryId == wish.getCategoryId()){

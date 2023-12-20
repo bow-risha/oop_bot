@@ -21,12 +21,8 @@ public class Wish extends EntityBase {
         categoryId = category.getId();
     }
 
-    public void setLink(String link) {
-        try {
-            this.link = new URL(link);
-        } catch (MalformedURLException e) {
-            return;
-        }
+    public void setLink(URL link) {
+      this.link=link;
     }
 
     public void setDescription(String description) {
